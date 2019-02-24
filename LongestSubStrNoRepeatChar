@@ -1,0 +1,88 @@
+/*
+Given a string, find the length of the longest substring without repeating characters.
+
+Example 1:
+
+Input: "abcabcbb"
+Output: 3 
+Explanation: The answer is "abc", with the length of 3. 
+Example 2:
+
+Input: "bbbbb"
+Output: 1
+Explanation: The answer is "b", with the length of 1.
+Example 3:
+
+Input: "pwwkew"
+Output: 3
+Explanation: The answer is "wke", with the length of 3. 
+             Note that the answer must be a substring, "pwke" is a subsequence and not a substring.
+*/
+
+public class Solution {
+    public int LengthOfLongestSubstring(string s) {
+        
+        int MaxSubStr = 0,
+            CurrentIndex = 0,
+            SubStrStartIndex = 0,
+            SubStrCurrentEnd = 0,
+            TmpDiff = 0;
+        
+        Dictionary<char,int> SubStr = new Dictionary<char,int>();
+
+        
+        if(s == null)
+        { 
+            return 0;
+        }
+        else if(s.Length < 1)
+        {
+            return s.Length;
+        }
+        else
+        { 
+
+            while(CurrentIndex < s.Length && SubStrCurrentEnd < s.Length)
+            {
+
+                if(SubStr.ContainsKey(s[SubStrCurrentEnd]))
+                {
+                    
+                    
+                    TmpDiff = SubStr.Count();//SubStrCurrentEnd - SubStrStartIndex;
+                    
+                    
+                    CurrentIndex =  SubStr[s[SubStrCurrentEnd]]+1;
+                    
+                    if( MaxSubStr <= TmpDiff)
+                    {
+                        MaxSubStr = TmpDiff;   
+                    }
+                    
+                    SubStrStartIndex = CurrentIndex;
+                    SubStrCurrentEnd = CurrentIndex;
+                    SubStr.Clear();
+ 
+                }
+                else
+                {
+                     
+                    SubStr.Add(s[SubStrCurrentEnd],SubStrCurrentEnd);    
+                    SubStrCurrentEnd++;
+                }
+
+            }
+        }
+        
+        
+        TmpDiff = SubStr.Count();//SubStrCurrentEnd - SubStrStartIndex;      
+
+        if( MaxSubStr <= TmpDiff)
+        {
+            MaxSubStr = TmpDiff;   
+        }
+        
+        return MaxSubStr;
+        
+    }
+}
